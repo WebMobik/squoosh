@@ -20,11 +20,13 @@ module.exports = {
   resolve: {
     extensions: ['.js'],
     alias: {
-      '@': path.resolve(__dirname, 'src')
+      '@': path.resolve(__dirname, 'src'),
+      '@core': path.resolve(__dirname, 'src/core')
     }
   },
-  devtool: 'source-map',
+  devtool: isDev ? 'source-map' : false,
   devServer: {
+    contentBase: path.join(__dirname, 'dist'),
     port: 3000,
     hot: isDev
   },
