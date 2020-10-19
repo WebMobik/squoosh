@@ -1,3 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import '~normalize.css';
+
+@import 'toolbar.scss';
+@import 'resizer.scss';
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+}
+
 #app {
-    background-color: beige;
+    background: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2"><path d="M1 2V0h1v1H0v1z" fill-opacity=".025"/></svg>') center;
+    background-size: 20px 20px;
+    height: 100%;
+    max-width: 100%;
+    font-size: 0.9rem;
+}
+
+.bg-blue {
+    background: $blue;
+    color: #fff;
 }

@@ -1,5 +1,5 @@
-export default class Resize {
-  static className = 'editor__resize_tools'
+export class Resizer {
+  static className = 'resizer'
 
   constructor() {
 
@@ -7,25 +7,27 @@ export default class Resize {
 
   toHTML() {
     return `
-        <button class="btn_resize">
-          <i class="material-icons blue-ico">-</i>
-        </button>
+        <div class="resizer__tools">
+          <button class="resizer__btn away">
+            <i class="material-icons blue-ico">-</i>
+          </button>
 
-        <span class="span_resize">
-          <input type="number" value="40" required>%
-        </span>
+          <span class="resizer__resize">
+            <input type="number" value="40" required>
+          </span>
 
-        <button class="btn_resize">
-          <i class="material-icons blue-ico">+</i>
-        </button>
+          <button class="resizer__btn closer">
+            <i class="material-icons blue-ico">+</i>
+          </button>
+        </div>
+          <button class="resizer__btn anothe_tool">
+            <i class="material-icons blue-ico">rotate_right</i>
+          </button>
 
-        <button class="btn_resize">
-          <i class="material-icons blue-ico">rotate_right</i>
-        </button>
-
-        <button class="btn_resize bg-blue">
-          <i class="material-icons">flip_to_front/i>
-        </button> <!-- flip_to_back -->
+          <button class="resizer__btn anothe_tool bg-blue">
+            <i class="material-icons">flip_to_front</i>
+          </button> <!-- flip_to_back -->
+        
       `
   }
 }

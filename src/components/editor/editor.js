@@ -20,6 +20,6 @@ export class Editor {
   }
 
   render() {
-    this.$el.append(this.getRoot)
+    this.$el.append(this.getRoot())
   }
 }

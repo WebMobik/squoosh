@@ -5,6 +5,10 @@ export class Dom {
         selector
   }
 
+  html(html) {
+    return this.$el.innerHTML = html
+  }
+
   append(node) {
     if (node instanceof Dom) {
       node = node.$el
