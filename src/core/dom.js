@@ -20,6 +20,14 @@ export class Dom {
       this.$el.appendChild(node)
     }
   }
+
+  on(listener, fn) {
+    this.$el.addEventListener(listener, fn)
+  }
+
+  off(listener, fn) {
+    this.$el.removeEventListener(listener, fn)
+  }
 }
 
 export function $(selector) {

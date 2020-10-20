@@ -1,8 +1,16 @@
-export class LeftToolbar {
+import {EditorComponent} from '@/core/EditorComponent'
+
+export class LeftToolbar extends EditorComponent {
   static className = 'left_panel'
 
-  constructor() {
+  constructor($root, options) {
+    super($root, options = {
+      name: 'LeftToolbar'
+    })
+  }
 
+  init() {
+    super.init()
   }
 
   toHTML() {

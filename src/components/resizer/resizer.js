@@ -1,9 +1,18 @@
-export class Resizer {
+import {EditorComponent} from '@/core/EditorComponent'
+
+export class Resizer extends EditorComponent {
   static className = 'resizer'
 
-  constructor() {
-
+  constructor($root, options) {
+    super($root, options = {
+      name: 'Resizer'
+    })
   }
+
+  init() {
+    super.init()
+  }
+
 
   toHTML() {
     return `

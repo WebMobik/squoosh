@@ -1,8 +1,12 @@
-export class RightToolbar {
+import {EditorComponent} from '@/core/EditorComponent'
+
+export class RightToolbar extends EditorComponent {
     static className = 'right_panel'
 
-    constructor() {
-
+    constructor($root, options) {
+      super($root, options = {
+        name: 'RightPanel'
+      })
     }
 
     toHTML() {

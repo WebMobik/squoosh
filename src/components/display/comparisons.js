@@ -1,40 +1,23 @@
 export function initComparisons() {
-  let x = ''
-  let i = ''
-  /* find all elements with an "overlay" class:*/
-  x = document.getElementsByClassName('img-comp-overlay');
-  for (i = 0; i < x.length; i++) {
-    /* once for each "overlay" element:
-        pass the "overlay" element as a parameter when
-        executing the compareImages function:*/
-    compareImages(x[i]);
-  }
+  const x = document.querySelector('.img-comp-overlay');
+  compareImages(x);
   function compareImages(img) {
-    let slider = ''
     let clicked = 0
-    let w = ''
-    let h = ''
-    /* get the width and height of the img element*/
-    w = img.offsetWidth;
-    h = img.offsetHeight;
+    const w = img.offsetWidth;
     /* set the width of the img element to 50%:*/
     img.style.width = (w / 2) + 'px';
+    console.log(img.style.width)
     /* create slider:*/
-    slider = document.createElement('DIV');
+    const slider = document.createElement('div');
     slider.setAttribute('class', 'img-comp-slider');
     /* insert slider*/
     img.parentElement.insertBefore(slider, img);
-    /* position the slider in the middle:*/
-    slider.style.top = (h / 2) - (slider.offsetHeight / 2) + 'px';
     slider.style.left = (w / 2) - (slider.offsetWidth / 2) + 'px';
     /* execute a function when the mouse button is pressed:*/
     slider.addEventListener('mousedown', slideReady);
     /* and another function when the mouse button is released:*/
     window.addEventListener('mouseup', slideFinish);
     /* or touched (for touch screens:*/
-    slider.addEventListener('touchstart', slideReady);
-    /* and released (for touch screens:*/
-    window.addEventListener('touchstop', slideFinish);
     function slideReady(e) {
       /* prevent any other actions
         that may occur when moving over the image:*/
@@ -43,7 +26,6 @@ export function initComparisons() {
       clicked = 1;
       /* execute a function when the slider is moved:*/
       window.addEventListener('mousemove', slideMove);
-      window.addEventListener('touchmove', slideMove);
     }
     function slideFinish() {
       /* the slider is no longer clicked:*/
