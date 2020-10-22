@@ -1,65 +1,21 @@
-export function initComparisons() {
-  const x = document.querySelector('.img-comp-overlay');
+export function compareImages(slider, img) {
+  img.before(slider.$el, img.$el)
 
-  compareImages(x);
-}
+  document.onmousemove = e => {
+    //  e.pageX - img.getCoords().left - window.pageXOffset
+    const pos = e.pageX
+    const sliderPos = pos - (slider.getWidth / 2) + 'px'
+    slider.css({left: sliderPos})
 
-function compareImages(img) {
-  let clicked = 0
-  const w = img.offsetWidth;
-
-  img.style.width = (w / 2) + 'px';
-
-  const slider = document.querySelector('.img-comp-slider')
-
-  img.parentElement.insertBefore(slider, img);
-  slider.style.left = (w / 2) - (slider.offsetWidth / 2) + 'px';
-
-  slider.addEventListener('mousedown', slideReady);
-
-  window.addEventListener('mouseup', slideFinish);
-
-  function slideReady(e) {
-    e.preventDefault();
-
-    clicked = 1;
-
-    window.addEventListener('mousemove', slideMove);
+    slide(pos)
   }
 
-  function slideFinish() {
-    clicked = 0;
+  document.onmouseup = () => {
+    document.onmousemove = null
+    document.onmouseup = null
   }
 
-  function slideMove(e) {
-    let pos;
-
-    if (clicked == 0) return false;
-
-    pos = getCursorPos(e)
-
-    if (pos < 0) pos = 0;
-    if (pos > w) pos = w;
-
-    slide(pos);
-  }
-
-  function getCursorPos(e) {
-    let a = ''
-    let x = 0;
-    e = e || window.event;
-
-    a = img.getBoundingClientRect();
-
-    x = e.pageX - a.left;
-
-    x = x - window.pageXOffset;
-    return x;
-  }
-
-  function slide(x) {
-    img.style.width = x + 'px';
-
-    slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + 'px';
+  function slide(pos) {
+    img.css({clip: `rect(0px, ${pos}px, auto, 0px)`})
   }
 }

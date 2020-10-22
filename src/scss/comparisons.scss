@@ -16,12 +16,14 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    overflow:hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .img-comp-img img {
     display: block;
-    vertical-align: middle;
+    position: absolute;
 }
 
 .img-comp-slider {
