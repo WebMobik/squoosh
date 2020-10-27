@@ -1,7 +1,8 @@
 import {EditorComponent} from '@core/EditorComponent'
 import {compareImages} from './comparisons'
-import {initCenterResize} from './display.functions'
+import {initCenterResize, initCanvasImage} from './display.functions'
 import {$} from '@core/dom';
+import {zoom} from './display-zoom';
 
 export class Display extends EditorComponent {
     static className = 'display'
@@ -9,13 +10,14 @@ export class Display extends EditorComponent {
     constructor($root, options) {
       super($root, options = {
         name: 'Display',
-        listeners: ['mousedown']
+        listeners: ['mousedown', 'mousewheel']
       })
     }
 
     init() {
       super.init()
 
+      initCanvasImage(this.$root)
       initCenterResize(this.$root)
     }
 
@@ -28,14 +30,18 @@ export class Display extends EditorComponent {
       }
     }
 
+    onMousewheel(event) {
+      zoom(event, this.$root)
+    }
+
     toHTML() {
       return `
           <div class="resize-img">
               <div class="img-comp-img">
-                <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" alt="editing">
+                <canvas id="canvas" data-canvas="img" />
               </div>
               <div class="img-comp-img img-comp-overlay" data-type="overlay">
-                <img src="https://cdn.pixabay.com/photo/2015/02/24/15/41/dog-647528__340.jpg" alt="editing">
+                <canvas id="canvas" data-canvas="img" />
               </div>
               <div class="img-comp-slider" data-type="resize"></div>
           </div>

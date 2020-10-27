@@ -41,6 +41,10 @@ export class Dom {
     return $(this.$el.querySelector(selector))
   }
 
+  findAll(selector) {
+    return $(this.$el.querySelectorAll(selector))
+  }
+
   on(listener, fn) {
     this.$el.addEventListener(listener, fn)
   }
