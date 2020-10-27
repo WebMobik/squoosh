@@ -1,6 +1,7 @@
 import {EditorComponent} from '@core/EditorComponent'
 import {compareImages} from './comparisons'
-import {initCenterResize, initCanvasImage} from './display.functions'
+import {initCenterResize, dragImage} from './display.functions'
+import {initCanvasImage} from './display.canvas'
 import {$} from '@core/dom';
 import {zoom} from './display-zoom';
 
@@ -26,8 +27,10 @@ export class Display extends EditorComponent {
       if ($target.data.type == 'resize') {
         event.preventDefault()
         const img = this.$root.find(`[data-type="overlay"]`)
-        compareImages($target, img)
+        return compareImages($target, img)
       }
+      const $targetCanvas = this.$root.findAll('[data-canvas="img"]').$el
+      dragImage(event, $targetCanvas)
     }
 
     onMousewheel(event) {
@@ -36,7 +39,7 @@ export class Display extends EditorComponent {
 
     toHTML() {
       return `
-          <div class="resize-img">
+          <div class="resize-img" data-type="display">
               <div class="img-comp-img">
                 <canvas id="canvas" data-canvas="img" />
               </div>

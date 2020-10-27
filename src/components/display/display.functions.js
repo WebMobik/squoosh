@@ -9,26 +9,21 @@ export function initCenterResize($root) {
   slider.css({left: middleSlider})
 }
 
-export function initCanvasImage($root) {
-  const canvas = getCanvas($root)
-  const image = new Image()
-
-  image.src = 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg';
-  image.onload = drawImageActualSize(canvas.canvasImg, canvas.ctx, image)
-}
-
-export function getCanvas($root) {
-  const canvasImg = $root.findAll(`[data-canvas="img"]`).$el
-  const ctx = Array.from(canvasImg).map(el => el.getContext('2d'))
-
-  return {canvasImg, ctx}
-}
-
-function drawImageActualSize(canvas, ctx, image) {
-  for (let i = 0; i < canvas.length; i++) {
-    canvas[i].width = image.naturalWidth;
-    canvas[i].height = image.naturalHeight;
+export function dragImage(e, canvas) {
+  const translateX = canvas[0].style.translateX || 0
+  const translateY = canvas[0].style.translateY || 0
+  console.log(translateX + ' ' + translateY)
+  const startX = e.x
+  const startY = e.y
+  console.log(canvas[0].style)
+  document.onmousemove = (event) => {
+    canvas.forEach(el =>
+      el.style.transform =
+        `translate(${event.x - startX}px, ${event.y - startY}px)`
+    )
   }
-  ctx[0].drawImage(image, 0, 0, image.width, image.height);
-  ctx[1].drawImage(image, 0, 0, image.width, 200);
+  document.onmouseup = () => {
+    document.onmousemove = null
+    document.onmouseup = null
+  }
 }

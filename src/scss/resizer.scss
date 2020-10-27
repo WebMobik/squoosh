@@ -1,10 +1,11 @@
 .resizer {
-    position: absolute;
+    position: fixed;
     bottom: 30px;
     left: 0;
     right: 0;
     display: flex;
     justify-content: center;
+    pointer-events: none;
 
     &__tools {
         border: $border;
