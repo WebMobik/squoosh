@@ -4,21 +4,22 @@
     display: flex;
     align-items: center;
     position: absolute;
-    // left: calc(50% - 302px);
-}
-
-.img-comp-container {
-    position: relative;
-    height: 200px; /*should be the same height as the images*/
 }
 
 .img-comp-img {
+    --x: 0;
+    --y: 0;
+    --scale: 0.5;
     position: absolute;
     width: 100%;
     height: 100%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+.canvas { 
+    transform: translate(var(--x), var(--y), var(--scale));
 }
 
 .img-comp-img img {
@@ -30,7 +31,6 @@
     position: fixed;
     z-index: 9;
     cursor: ew-resize;
-    /*set the appearance of the slider:*/
     width: 7px;
     height: 100%;
     background-color: #2196F3;

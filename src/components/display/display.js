@@ -1,7 +1,6 @@
 import {EditorComponent} from '@core/EditorComponent'
-import {compareImages} from './comparisons'
-import {initCenterResize, dragImage} from './display.functions'
-import {initCanvasImage} from './display.canvas'
+import {dragImage, compareImages} from './display-resize'
+import {craeteDisplay, initDisplay} from './display.template'
 import {$} from '@core/dom';
 import {zoom} from './display-zoom';
 
@@ -18,8 +17,7 @@ export class Display extends EditorComponent {
     init() {
       super.init()
 
-      initCanvasImage(this.$root)
-      initCenterResize(this.$root)
+      initDisplay(this.$root)
     }
 
     onMousedown(event) {
@@ -38,16 +36,6 @@ export class Display extends EditorComponent {
     }
 
     toHTML() {
-      return `
-          <div class="resize-img" data-type="display">
-              <div class="img-comp-img">
-                <canvas id="canvas" data-canvas="img" />
-              </div>
-              <div class="img-comp-img img-comp-overlay" data-type="overlay">
-                <canvas id="canvas" data-canvas="img" />
-              </div>
-              <div class="img-comp-slider" data-type="resize"></div>
-          </div>
-        `
+      return craeteDisplay()
     }
 }

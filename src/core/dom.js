@@ -29,12 +29,23 @@ export class Dom {
     return this.$el.offsetWidth
   }
 
+  attr(name, value) {
+    if (!value) {
+      return this.$el.getAttribute(name)
+    }
+    this.$el.setAttribute(name, value)
+  }
+
   getCoords() {
     return this.$el.getBoundingClientRect()
   }
 
   before(after, before) {
     this.$el.parentElement.insertBefore(after, before)
+  }
+
+  each(el) {
+    return this.$el.forEach(el)
   }
 
   find(selector) {
