@@ -1,7 +1,7 @@
 export function createCanvasImage() {
   const canvas = document.createElement('canvas')
   canvas.classList.add('canvas')
-  canvas.setAttribute('data-type', 'canvas')
+  canvas.setAttribute('data-canvas', 'img')
   const ctx = canvas.getContext('2d')
 
   const image = new Image()
