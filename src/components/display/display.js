@@ -1,31 +1,41 @@
 import {EditorComponent} from '@core/EditorComponent'
-import {initComparisons} from './comparisons'
+import {dragImage, compareImages, zoom} from './display-resize'
+import {craeteDisplay, initDisplay} from './display.template'
+import {$} from '@core/dom';
 
 export class Display extends EditorComponent {
     static className = 'display'
 
     constructor($root, options) {
       super($root, options = {
-        name: 'Display'
+        name: 'Display',
+        listeners: ['mousedown', 'mousewheel']
       })
     }
 
     init() {
       super.init()
-      initComparisons()
+
+      initDisplay(this.$root)
+    }
+
+    onMousedown(event) {
+      const $target = $(event.target)
+      if ($target.data.type == 'resize') {
+        event.preventDefault()
+        const img = this.$root.find(`[data-resize="overlay"]`)
+        return compareImages($target, img)
+      }
+      const $targetCanvas = this.$root.findAll('[data-type="canvas"]').$el
+      dragImage(event, $targetCanvas)
+    }
+
+    onMousewheel(event) {
+      event.preventDefault()
+      zoom(event, this.$root)
     }
 
     toHTML() {
-      return `
-          <div class="resize-img">
-              <div class="img-comp-img">
-                <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" alt="editing">
-              </div>
-              <div class="img-comp-img img-comp-overlay">
-                <img src="https://cdn.pixabay.com/photo/2015/02/24/15/41/dog-647528__340.jpg" alt="editing">
-              </div>
-              <div class="img-comp-slider"></div>
-          </div>
-        `
+      return craeteDisplay()
     }
 }

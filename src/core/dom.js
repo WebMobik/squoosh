@@ -21,12 +21,53 @@ export class Dom {
     }
   }
 
+  get data() {
+    return this.$el.dataset
+  }
+
+  get getWidth() {
+    return this.$el.offsetWidth
+  }
+
+  attr(name, value) {
+    if (!value) {
+      return this.$el.getAttribute(name)
+    }
+    this.$el.setAttribute(name, value)
+  }
+
+  getCoords() {
+    return this.$el.getBoundingClientRect()
+  }
+
+  before(after, before) {
+    this.$el.parentElement.insertBefore(after, before)
+  }
+
+  each(el) {
+    return this.$el.forEach(el)
+  }
+
+  find(selector) {
+    return $(this.$el.querySelector(selector))
+  }
+
+  findAll(selector) {
+    return $(this.$el.querySelectorAll(selector))
+  }
+
   on(listener, fn) {
     this.$el.addEventListener(listener, fn)
   }
 
   off(listener, fn) {
     this.$el.removeEventListener(listener, fn)
+  }
+
+  css(styles = {}) {
+    Object.keys(styles).forEach(key => {
+      return this.$el.style[key] = styles[key]
+    })
   }
 }
 

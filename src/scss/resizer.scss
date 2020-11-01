@@ -1,14 +1,17 @@
 .resizer {
-    position: absolute;
+    position: fixed;
     bottom: 30px;
     left: 0;
     right: 0;
     display: flex;
     justify-content: center;
+    z-index: 999;
 
     &__tools {
         border: $border;
         border-radius: 3px;
+        padding: 1px;
+        background-color: #fff;
     }
 
     &__btn {
