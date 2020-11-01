@@ -5,7 +5,8 @@ export class LeftToolbar extends EditorComponent {
 
   constructor($root, options) {
     super($root, options = {
-      name: 'LeftToolbar'
+      name: 'LeftToolbar',
+      ...options
     })
   }
 

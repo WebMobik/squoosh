@@ -2,6 +2,7 @@ export function createResizer() {
   const resizePluse = 'data-resize="pluse"'
   const resizeMinus = 'data-resize="minus"'
   const resizeValue = 'data-resize="value"'
+  const resizeRotation = 'data-resize="rotation"'
 
   return `
         <div class="resizer__tools">
@@ -18,8 +19,8 @@ export function createResizer() {
             </button>
         </div>
 
-        <button class="resizer__btn anothe_tool">
-            <i class="material-icons blue-ico">rotate_right</i>
+        <button class="resizer__btn anothe_tool" ${resizeRotation}>
+         <i class="material-icons blue-ico" ${resizeRotation}>rotate_right</i>
         </button>
 
         <button class="resizer__btn anothe_tool bg-blue">

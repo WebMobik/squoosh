@@ -21,6 +21,10 @@ export class Dom {
     }
   }
 
+  getProp(value) {
+    return this.$el.style.getPropertyValue(value)
+  }
+
   get data() {
     return this.$el.dataset
   }

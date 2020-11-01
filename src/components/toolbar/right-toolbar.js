@@ -5,7 +5,8 @@ export class RightToolbar extends EditorComponent {
 
     constructor($root, options) {
       super($root, options = {
-        name: 'RightPanel'
+        name: 'RightPanel',
+        ...options
       })
     }
 

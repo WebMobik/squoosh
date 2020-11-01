@@ -9,30 +9,37 @@ export class Display extends EditorComponent {
     constructor($root, options) {
       super($root, options = {
         name: 'Display',
-        listeners: ['mousedown', 'mousewheel']
+        listeners: ['mousedown', 'mousewheel'],
+        ...options
       })
     }
 
     init() {
       super.init()
 
+      this.canvases = this.$root.findAll('[data-type="canvas"]').$el
+
       initDisplay(this.$root)
     }
 
     onMousedown(event) {
+      event.preventDefault()
       const $target = $(event.target)
       if ($target.data.type == 'resize') {
-        event.preventDefault()
         const img = this.$root.find(`[data-resize="overlay"]`)
         return compareImages($target, img)
       }
-      const $targetCanvas = this.$root.findAll('[data-type="canvas"]').$el
-      dragImage(event, $targetCanvas)
+      dragImage(event, this.canvases)
     }
 
     onMousewheel(event) {
       event.preventDefault()
-      zoom(event, this.$root)
+      const scale =
+          Number(this.canvases[0].style.getPropertyValue('--scale')) || 1
+
+      const emitScale = zoom(event, this.canvases, scale)
+
+      this.$emit('display:scale', emitScale)
     }
 
     toHTML() {
