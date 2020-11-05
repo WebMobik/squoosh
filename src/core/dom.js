@@ -21,8 +21,24 @@ export class Dom {
     }
   }
 
+  addClass(className) {
+    this.$el.classList.add(className)
+  }
+
+  removeClass(className) {
+    this.$el.classList.remove(className)
+  }
+
+  contains(className) {
+    return this.$el.classList.contains(className)
+  }
+
   getProp(value) {
     return this.$el.style.getPropertyValue(value)
+  }
+
+  setProp(variable, value) {
+    this.$el.style.setProperty(variable, value)
   }
 
   get data() {

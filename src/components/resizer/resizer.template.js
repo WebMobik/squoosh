@@ -3,6 +3,7 @@ export function createResizer() {
   const resizeMinus = 'data-resize="minus"'
   const resizeValue = 'data-resize="value"'
   const resizeRotation = 'data-resize="rotation"'
+  const resizeBackground = 'data-resize="background"'
 
   return `
         <div class="resizer__tools">
@@ -23,8 +24,8 @@ export function createResizer() {
          <i class="material-icons blue-ico" ${resizeRotation}>rotate_right</i>
         </button>
 
-        <button class="resizer__btn anothe_tool bg-blue">
-            <i class="material-icons">flip_to_front</i>
+        <button class="resizer__btn anothe_tool" ${resizeBackground}>
+            <i class="material-icons" ${resizeBackground}>flip_to_front</i>
         </button> <!-- flip_to_back -->
     
   `

@@ -6,5 +6,8 @@ export function capitalize(string) {
 }
 
 export function equalsScale(scale) {
-  return Math.round(100 * scale)
+  if (scale < 10) {
+    return Math.round(100 * scale)
+  }
+  return scale / 100
 }

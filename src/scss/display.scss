@@ -1,4 +1,10 @@
 .display {
     width: 100%;
     height: 100%;
+    transition: background-color 0.3s;
+}
+
+.bg-dark {
+    background-color: rgba($color: #000000, $alpha: 0.55);
+    transition: background-color 0.3s;
 }
