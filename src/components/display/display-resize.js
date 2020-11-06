@@ -34,9 +34,9 @@ export function compareImages(slider, img) {
   }
 }
 
-export function zoom(e, $root) {
-  const canvases = $root.findAll('[data-type="canvas"]').$el
-  let scale = Number(canvases[0].style.getPropertyValue('--scale')) || 1
+export function zoom(e, $canvases, scale) {
+  // const canvas = $canvases[0]
+  // let scale = Number(canvas.style.getPropertyValue('--scale')) || 1
   const delta = e.deltaY || e.detail || e.wheelDelta
   if (delta > 0) scale -= 0.05
   else scale += 0.05
@@ -46,9 +46,11 @@ export function zoom(e, $root) {
   const x = e.x - window.innerWidth/2
   const y = e.y - window.innerHeight/2
 
-  canvases.forEach(el => {
+  $canvases.forEach(el => {
     el.style.setProperty('--x', x + 'px')
     el.style.setProperty('--y', y + 'px')
     el.style.setProperty('--scale', scale)
   })
+
+  return scale
 }

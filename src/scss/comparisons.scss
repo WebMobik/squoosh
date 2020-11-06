@@ -10,6 +10,7 @@
     --x: 0;
     --y: 0;
     --scale: 1;
+    --rotate: 0;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -19,7 +20,7 @@
 }
 
 .canvas { 
-    transform: translate(var(--x), var(--y)) scale(var(--scale));
+    transform: translate(var(--x), var(--y)) scale(var(--scale)) rotate(var(--rotate));
 }
 
 .img-comp-img img {

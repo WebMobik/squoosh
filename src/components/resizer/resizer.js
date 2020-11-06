@@ -1,6 +1,9 @@
 import {EditorComponent} from '@/core/EditorComponent'
+import {equalsScale} from '@/core/utils'
 import {createResizer} from './resizer.template'
-import {resizeDisplay} from './resizer.functions'
+import {
+  resizeDisplay, rotateCanvas, changeBackground
+} from './resizer.functions'
 import {$} from '@core/dom'
 
 export class Resizer extends EditorComponent {
@@ -9,12 +12,22 @@ export class Resizer extends EditorComponent {
   constructor($root, options) {
     super($root, options = {
       name: 'Resizer',
-      listeners: ['click', 'input']
+      listeners: ['click', 'input'],
+      ...options
     })
+
+    this.canvases = null
   }
 
   init() {
     super.init()
+
+    this.$input = this.$root.find('[data-resize="value"]').$el
+    this.canvases = document.querySelectorAll('[data-type="canvas"]')
+
+    this.$on('display:scale', scale => {
+      this.$input.value = equalsScale(scale)
+    })
   }
 
 
@@ -23,13 +36,30 @@ export class Resizer extends EditorComponent {
   }
 
   onClick(event) {
+    event.preventDefault()
     const $target = $(event.target)
-    if ($target.data.resize == 'pluse' || $target.data.resize == 'minus') {
-      resizeDisplay($target, this.$root)
+
+    switch ($target.data.resize) {
+      case 'pluse':
+      case 'minus':
+        resizeDisplay($target, this.$input, this.canvases)
+        break
+      case 'rotation':
+        rotateCanvas(this.canvases)
+        break
+      case 'background':
+        changeBackground(this.$root)
+        break
+      default:
+        break
     }
   }
 
   onInput(event) {
-    console.log(event)
+    const value = event.target.value
+    const rezult = value >= 10 ? equalsScale(value) : 0.1
+
+    this.canvases.forEach(canvas =>
+      $(canvas).setProp('--scale', rezult))
   }
 }
