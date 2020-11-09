@@ -1,8 +1,8 @@
 export function dragImage(e, canvases) {
   const startX =
-    e.x - canvases[0].style.getPropertyValue('--x').replace(/px/i, '')
+    e.x - canvases[0].style.getPropertyValue('--x').slice(0, -2)
   const startY =
-    e.y - canvases[0].style.getPropertyValue('--y').replace(/px/i, '')
+    e.y - canvases[0].style.getPropertyValue('--y').slice(0, -2)
 
   document.onmousemove = (event) => {
     canvases.forEach(el => {
@@ -35,8 +35,6 @@ export function compareImages(slider, img) {
 }
 
 export function zoom(e, $canvases, scale) {
-  // const canvas = $canvases[0]
-  // let scale = Number(canvas.style.getPropertyValue('--scale')) || 1
   const delta = e.deltaY || e.detail || e.wheelDelta
   if (delta > 0) scale -= 0.05
   else scale += 0.05

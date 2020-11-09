@@ -34,8 +34,7 @@ export class Display extends EditorComponent {
 
     onMousewheel(event) {
       event.preventDefault()
-      const scale =
-          Number(this.canvases[0].style.getPropertyValue('--scale')) || 1
+      const scale = +this.canvases[0].style.getPropertyValue('--scale') || 1
 
       const emitScale = zoom(event, this.canvases, scale)
 
