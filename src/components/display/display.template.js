@@ -1,11 +1,12 @@
 import {$} from '@core/dom'
-import {createCanvasImage} from './display.functions'
 
 export function craeteDisplay() {
   return `
         <div class="img-comp-img" data-type="canvas">
+          <canvas class="canvas" data-canvas="img"></canvas>
         </div>
         <div class="img-comp-img" data-type="canvas" data-resize="overlay">
+          <canvas class="canvas" data-canvas="img"></canvas>
         </div>
     `
 }
@@ -14,7 +15,6 @@ export function initDisplay($root) {
   $root.findAll('[data-type="canvas"]').each(el => {
     const elem = $(el)
     if (elem.data.resize) initOverlayMiddle(elem)
-    elem.append(createCanvasImage())
   })
 
   initCenterSlider($root)

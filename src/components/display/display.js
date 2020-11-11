@@ -1,6 +1,7 @@
 import {EditorComponent} from '@core/EditorComponent'
 import {dragImage, compareImages, zoom} from './display-resize'
 import {craeteDisplay, initDisplay} from './display.template'
+import {onLoad} from './display.functions'
 import {$} from '@core/dom';
 
 export class Display extends EditorComponent {
@@ -19,6 +20,7 @@ export class Display extends EditorComponent {
 
       this.canvases = this.$root.findAll('[data-type="canvas"]').$el
 
+      this.$on('reader:upload', file => onLoad(file))
       initDisplay(this.$root)
     }
 
