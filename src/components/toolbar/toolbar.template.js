@@ -86,20 +86,24 @@ export function createToolbar(download) {
             </div>
             <div class="panel__tools">
                 <div class="panel__tool selection">
-                    <select name="format" id="format">
-                        <option value="WebP">WebP</option>
-                        <option value="MozJPEG">MozJPEG</option>
-                        <option value="AVIF">AVIF</option>
-                        <option value="Browser PNG">Browser PNG</option>
+                    <select name="format" id="format" data-type="format">
+                        <option value="Original">Original image</option>
+                        <option value="PNG">Browser PNG</option>
+                        <option value="JPEG">Browser JPEG</option>
+                        <option value="WebP">Browser WebP</option>
                     </select>
                 </div>
                 <div class="panel__tool quality">
                     <span>Quality:</span>
-                    <input class="input-size" 
-                        type="text" name="slideResize" value="50">
+                    <input 
+                        class="input-size" 
+                        type="text" name="slideResize" 
+                        value="0.75"
+                        data-range="input"
+                    >
                 </div>
-                <input type="range" class="input-range"
-                        min="0" max="1" value="0.5" step="0.01">
+                <input type="range" class="input-range" data-type="range"
+                        min="0" max="1" value="0.75" step="0.01">
             </div>
         </div>
         

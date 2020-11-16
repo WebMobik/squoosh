@@ -17,7 +17,7 @@ export class Reader extends EditorComponent {
 
     toHTML() {
       return `
-        <input name="myFile" type="file">  
+        <input name="myFile" type="file" data-type="reader">  
       `
     }
 

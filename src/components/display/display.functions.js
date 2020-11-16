@@ -1,3 +1,5 @@
+import {canvasDraw} from '@core/utils'
+
 // function onLoad(canvas, ctx, img, ratio) {
 //   canvas.width = img.naturalWidth
 //   canvas.height = img.naturalHeight
@@ -20,38 +22,35 @@ export function onLoad(file) {
 
   reader.readAsDataURL(file)
   reader.onload = event => {
-    loadImg(event, file, reader)
+    loadImg(event, reader)
   }
 }
 
-function loadImg(event, file, reader) {
+function loadImg(event, reader) {
   const canvases = document.querySelectorAll('[data-canvas="img"]')
+  reader.onerror = error => console.log(error)
 
   const img = new Image()
   img.src = event.target.result
 
   img.onload = () => {
     canvases.forEach(canvas => {
-      const canvasImage = canvasDraw(canvas, img, file.type, file.name)
-      convertCanvasToImage(canvasImage)
+      const ctx = canvas.getContext('2d')
+      canvasDraw(canvas, ctx, img)
     })
   }
-
-  reader.onerror = error => console.log(error)
 }
 
-function canvasDraw(canvas, img) {
-  const ctx = canvas.getContext('2d')
+export function convertCanvasToImage(canvas, format, size = 0.75) {
+  const image = new Image()
+  console.log(window.frames)
 
-  canvas.width = img.width
-  canvas.height = img.height
+  if (format == 'image/png') image.src = canvas.toDataURL(format)
+  else image.src = canvas.toDataURL(format, size)
 
-  ctx.drawImage(img, 0, 0, img.width, img.height)
-  return canvas
-}
-
-function convertCanvasToImage(canvas) {
-  const image = new Image();
-  image.src = canvas.toDataURL('image/png');
-  console.log(image.src)
+  image.onload = () => {
+    const ctx = canvas.getContext('2d')
+    ctx.clearRect(0, 0, image.width, image.height)
+    canvasDraw(canvas, ctx, image)
+  }
 }

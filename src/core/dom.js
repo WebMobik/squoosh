@@ -49,6 +49,14 @@ export class Dom {
     return this.$el.offsetWidth
   }
 
+  get value() {
+    return this.$el.value
+  }
+
+  set value(val) {
+    this.$el.value = val
+  }
+
   attr(name, value) {
     if (!value) {
       return this.$el.getAttribute(name)

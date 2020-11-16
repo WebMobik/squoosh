@@ -1,6 +1,7 @@
 import {EditorComponent} from '@/core/EditorComponent'
 import {createToolbar} from './toolbar.template'
 import {clickFunctional} from './toolbar.functional'
+import {convertName} from '@core/utils'
 import {$} from '@core/dom'
 
 export class LeftToolbar extends EditorComponent {
@@ -9,9 +10,15 @@ export class LeftToolbar extends EditorComponent {
     constructor($root, options) {
       super($root, options = {
         name: 'LeftPanel',
-        listeners: ['click'],
+        listeners: ['click', 'change'],
         ...options
       })
+    }
+
+    init() {
+      super.init()
+
+      this.canvas = document.querySelectorAll('[data-canvas="img"]')[1]
     }
 
     toHTML() {
@@ -30,5 +37,14 @@ export class LeftToolbar extends EditorComponent {
     onClick(event) {
       const $target = $(event.target)
       clickFunctional($target)
+    }
+
+    onChange(event) {
+      const $target = $(event.target)
+      if ($target.data.type == 'format') {
+        const format = convertName($target.value)
+        // console.log(typeof convertName($target.value))
+        this.$emit('toolbar:convert', this.canvas, format) // size
+      }
     }
 }
