@@ -93,17 +93,19 @@ export function createToolbar(download) {
                         <option value="WebP">Browser WebP</option>
                     </select>
                 </div>
-                <div class="panel__tool quality">
-                    <span>Quality:</span>
-                    <input 
-                        class="input-size" 
-                        type="text" name="slideResize" 
-                        value="0.75"
-                        data-range="input"
-                    >
+                <div class="tool__quality">
+                    <div class="panel__tool quality">
+                        <span>Quality:</span>
+                        <input 
+                            class="input-size" 
+                            type="text" name="slideResize" 
+                            value="0.75"
+                            data-range="input"
+                        >
+                    </div>
+                    <input type="range" class="input-range" data-type="range"
+                            min="0" max="1" value="0.75" step="0.01">
                 </div>
-                <input type="range" class="input-range" data-type="range"
-                        min="0" max="1" value="0.75" step="0.01">
             </div>
         </div>
         

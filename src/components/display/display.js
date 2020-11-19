@@ -1,7 +1,7 @@
 import {EditorComponent} from '@core/EditorComponent'
 import {dragImage, compareImages, zoom} from './display-resize'
 import {craeteDisplay, initDisplay} from './display.template'
-import {onLoad, convertCanvasToImage} from './display.functions'
+import ResizeImage from './display.functions'
 import {$} from '@core/dom';
 
 export class Display extends EditorComponent {
@@ -19,10 +19,11 @@ export class Display extends EditorComponent {
       super.init()
 
       this.canvases = this.$root.findAll('[data-type="canvas"]').$el
+      const canvas = $(this.canvases[0]).child(1)
 
-      this.$on('reader:upload', file => onLoad(file))
-      this.$on('toolbar:convert', (canvas, format, size) =>
-        convertCanvasToImage(canvas, format, size))
+      this.$on('reader:upload', file => ResizeImage.onLoad(file))
+      this.$on('toolbar:convert', (format, size) =>
+        ResizeImage.convertCanvasToImage(canvas, format, size))
       initDisplay(this.$root)
     }
 

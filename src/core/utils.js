@@ -13,10 +13,10 @@ export function equalsScale(scale) {
 }
 
 export function canvasDraw(canvas, ctx, img) {
-  canvas.width = img.width
-  canvas.height = img.height
+  canvas.width = img.width != 0 ? img.width : canvas.width
+  canvas.height = img.height !=0 ? img.height : canvas.height
 
-  ctx.drawImage(img, 0, 0, img.width, img.height)
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
 
   return canvas
 }

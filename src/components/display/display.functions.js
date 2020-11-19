@@ -17,40 +17,50 @@ import {canvasDraw} from '@core/utils'
 //       oc.height * ratio, 0, 0, canvas.width, canvas.height)
 // }
 
-export function onLoad(file) {
-  const reader = new FileReader()
-
-  reader.readAsDataURL(file)
-  reader.onload = event => {
-    loadImg(event, reader)
+export default class ResizeImage {
+  constructor() {
+    this.image = null
   }
-}
 
-function loadImg(event, reader) {
-  const canvases = document.querySelectorAll('[data-canvas="img"]')
-  reader.onerror = error => console.log(error)
+  static onLoad(file) {
+    const reader = new FileReader()
 
-  const img = new Image()
-  img.src = event.target.result
-
-  img.onload = () => {
-    canvases.forEach(canvas => {
-      const ctx = canvas.getContext('2d')
-      canvasDraw(canvas, ctx, img)
-    })
+    reader.readAsDataURL(file)
+    reader.onload = event => {
+      this.loadImg(event, reader)
+    }
   }
-}
 
-export function convertCanvasToImage(canvas, format, size = 0.75) {
-  const image = new Image()
-  console.log(window.frames)
+  static loadImg(event, reader) {
+    const canvases = document.querySelectorAll('[data-canvas="img"]')
+    reader.onerror = error => console.log(error)
 
-  if (format == 'image/png') image.src = canvas.toDataURL(format)
-  else image.src = canvas.toDataURL(format, size)
+    const img = new Image()
+    img.src = event.target.result
 
-  image.onload = () => {
+    img.onload = () => {
+      canvases.forEach(canvas => {
+        const ctx = canvas.getContext('2d')
+        canvasDraw(canvas, ctx, img)
+      })
+    }
+
+    this.image = img
+  }
+
+  static convertCanvasToImage(canvas, format, size = 0.75) {
     const ctx = canvas.getContext('2d')
-    ctx.clearRect(0, 0, image.width, image.height)
-    canvasDraw(canvas, ctx, image)
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    canvasDraw(canvas, ctx, this.image)
+
+    const src = format == 'image/png' ? canvas.toDataURL(format) :
+      canvas.toDataURL(format, +size)
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    const img = new Image()
+    img.src = src
+    img.onload = () => canvasDraw(canvas, ctx, img)
   }
 }

@@ -21,6 +21,7 @@ export class RightToolbar extends EditorComponent {
       super.init()
 
       this.canvas = document.querySelectorAll('[data-canvas="img"]')[0]
+      this.inputRange = this.$root.find('[data-range="input"]')
     }
 
     toHTML() {
@@ -44,20 +45,27 @@ export class RightToolbar extends EditorComponent {
     onChange(event) {
       const $target = $(event.target)
       if ($target.data.type == 'format') {
+        const $quality = $(this.inputRange.parent.parentNode)
+        $quality.removeClass(('none'))
+
         this.format = convertName($target.value)
-        this.$emit('toolbar:convert', this.canvas, this.format)
+
+        if (this.format == 'image/png') {
+          $quality.addClass('none')
+        }
+
+        this.$emit('toolbar:convert', this.format)
       }
     }
 
     onMousedown(event) {
       const $target = $(event.target)
-      const inputRange = this.$root.find('[data-range="input"]')
       if ($target.data.type == 'range') {
         document.onmousemove = () => {
-          inputRange.value = $target.value
+          this.inputRange.value = $target.value
         }
         document.onmouseup = () => {
-          this.$emit('toolbar:convert', this.canvas, this.format, $target.value)
+          this.$emit('toolbar:convert', this.format, $target.value)
           document.onmousemove = null
           document.onmouseup = null
         }

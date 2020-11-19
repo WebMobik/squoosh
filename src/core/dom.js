@@ -33,6 +33,14 @@ export class Dom {
     return this.$el.classList.contains(className)
   }
 
+  child(index) {
+    return this.$el.childNodes[index]
+  }
+
+  get parent() {
+    return this.$el.parentNode
+  }
+
   getProp(value) {
     return this.$el.style.getPropertyValue(value)
   }
