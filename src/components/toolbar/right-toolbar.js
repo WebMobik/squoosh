@@ -10,11 +10,11 @@ export class RightToolbar extends EditorComponent {
     constructor($root, options) {
       super($root, options = {
         name: 'RightPanel',
-        listeners: ['click', 'change', 'mousedown'],
+        listeners: ['click', 'change', 'mousedown', 'input'],
         ...options
       })
 
-      this.format = null
+      this.format = 'image/orig'
     }
 
     init() {
@@ -22,11 +22,21 @@ export class RightToolbar extends EditorComponent {
 
       this.canvas = document.querySelectorAll('[data-canvas="img"]')[0]
       this.inputRange = this.$root.find('[data-range="input"]')
+      this.$tools = this.$root.find('[data-type="tools"]')
+      // this.$on('reader:upload', file => { // add emit where image resize type
+      //   this.$root.find('[data-type="size"]').html(file.size)
+      // })
+      this.$on('reader:upload', () => {
+        this.$tools.find('[data-tool="width"]')
+            .value = this.canvas.clientWidth
+        this.$tools.find('[data-tool="height"]')
+            .value = this.canvas.clientHeight
+      })
     }
 
     toHTML() {
       const rightDownload = `
-            <span class="size__size">107 kB</span>
+            <span class="size__size" data-type="size">0</span>
             <div class="size__image">
                 <button class="download-img bg-blue">
                     <i class="material-icons">system_update_alt</i>
@@ -46,15 +56,18 @@ export class RightToolbar extends EditorComponent {
       const $target = $(event.target)
       if ($target.data.type == 'format') {
         const $quality = $(this.inputRange.parent.parentNode)
-        $quality.removeClass(('none'))
 
         this.format = convertName($target.value)
 
-        if (this.format == 'image/png') {
+        $quality.removeClass('none')
+        if (this.format == 'image/png' || this.format == 'image/orig') {
           $quality.addClass('none')
         }
 
         this.$emit('toolbar:convert', this.format)
+      }
+      if ($target.data.tool == 'width') {
+        console.log($target)
       }
     }
 
@@ -69,6 +82,16 @@ export class RightToolbar extends EditorComponent {
           document.onmousemove = null
           document.onmouseup = null
         }
+      }
+    }
+
+    onInput(event) {
+      const $target = $(event.target)
+      if ($target.data.tool == 'width') { // resize width
+        $(this.canvas).css({width: $target.value})
+      }
+      if ($target.data.tool == 'height') { // resize height
+        console.log($target)
       }
     }
 }

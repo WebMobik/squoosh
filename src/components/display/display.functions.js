@@ -27,16 +27,18 @@ export default class ResizeImage {
 
     reader.readAsDataURL(file)
     reader.onload = event => {
-      this.loadImg(event, reader)
+      this.loadImg(event, reader, file.type)
     }
   }
 
-  static loadImg(event, reader) {
+  static loadImg(event, reader, type) {
     const canvases = document.querySelectorAll('[data-canvas="img"]')
     reader.onerror = error => console.log(error)
 
     const img = new Image()
     img.src = event.target.result
+
+    // add start type image
 
     img.onload = () => {
       canvases.forEach(canvas => {

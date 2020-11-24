@@ -1,4 +1,4 @@
-export function createToolbar(download) {
+export function createToolbar(download, width, height) {
   return `
         <div class="edit_section">
             <div class="title bg-dark">
@@ -10,7 +10,7 @@ export function createToolbar(download) {
                         data-type="deploy">
                     Resize
                 </div>
-                <div class="panel__tools none">
+                <div class="panel__tools none" data-type="tools">
                     <div class="panel__tool method">
                         Method:
                         <select name="method" id="method">
@@ -33,11 +33,13 @@ export function createToolbar(download) {
                     </div>
                     <div class="panel__tool width">
                         Width:
-                        <input type="number" value="900" min="1" required>
+                        <input type="number" value="0" min="1" 
+                            data-tool="width" required>
                     </div>
                     <div class="panel__tool height">
                         Height:
-                        <input type="number" value="300" min="1" required>
+                        <input type="number" value="0" min="1" 
+                            data-tool="height" required>
                     </div>
                     <div class="panel__tool_checkbox chanel">
                         <input class="alpha-channel" 
@@ -87,13 +89,13 @@ export function createToolbar(download) {
             <div class="panel__tools">
                 <div class="panel__tool selection">
                     <select name="format" id="format" data-type="format">
-                        <option value="Original">Original image</option>
+                        <option value="orig">Original image</option>
                         <option value="PNG">Browser PNG</option>
                         <option value="JPEG">Browser JPEG</option>
                         <option value="WebP">Browser WebP</option>
                     </select>
                 </div>
-                <div class="tool__quality">
+                <div class="tool__quality none">
                     <div class="panel__tool quality">
                         <span>Quality:</span>
                         <input 
