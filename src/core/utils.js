@@ -24,3 +24,7 @@ export function canvasDraw(canvas, ctx, img) {
 export function convertName(format) {
   return 'image/' + format.toLowerCase()
 }
+
+export function convertSize(size) {
+  return `${(size/1000).toFixed(1)} kB`
+}

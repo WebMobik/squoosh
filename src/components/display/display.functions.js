@@ -23,31 +23,27 @@ export default class ResizeImage {
   }
 
   static onLoad(file) {
-    const reader = new FileReader()
+    return new Promise(resolve => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
 
-    reader.readAsDataURL(file)
-    reader.onload = event => {
-      this.loadImg(event, reader, file.type)
-    }
-  }
+      reader.onload = event => {
+        const canvases = document.querySelectorAll('[data-canvas="img"]')
+        reader.onerror = error => console.log(error)
 
-  static loadImg(event, reader, type) {
-    const canvases = document.querySelectorAll('[data-canvas="img"]')
-    reader.onerror = error => console.log(error)
+        const img = new Image()
+        img.src = event.target.result
 
-    const img = new Image()
-    img.src = event.target.result
-
-    // add start type image
-
-    img.onload = () => {
-      canvases.forEach(canvas => {
-        const ctx = canvas.getContext('2d')
-        canvasDraw(canvas, ctx, img)
-      })
-    }
-
-    this.image = img
+        img.onload = () => {
+          canvases.forEach(canvas => {
+            const ctx = canvas.getContext('2d')
+            canvasDraw(canvas, ctx, img)
+          })
+        }
+        this.image = img
+        resolve(img)
+      }
+    })
   }
 
   static convertCanvasToImage(canvas, format, size = 0.75) {
@@ -63,6 +59,7 @@ export default class ResizeImage {
 
     const img = new Image()
     img.src = src
+
     img.onload = () => canvasDraw(canvas, ctx, img)
   }
 }

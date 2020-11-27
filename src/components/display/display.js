@@ -21,9 +21,17 @@ export class Display extends EditorComponent {
       this.canvases = this.$root.findAll('[data-type="canvas"]').$el
       const canvas = $(this.canvases[0]).child(1)
 
-      this.$on('reader:upload', file => ResizeImage.onLoad(file))
-      this.$on('toolbar:convert', (format, size) =>
-        ResizeImage.convertCanvasToImage(canvas, format, size))
+      this.$on('reader:upload', async file => {
+        try {
+          const img = await ResizeImage.onLoad(file)
+          this.$emit('image:upload', img)
+        } catch (e) {
+          console.log(e.message)
+        }
+      })
+      this.$on('toolbar:convert', (format, size) => {
+        ResizeImage.convertCanvasToImage(canvas, format, size)
+      })
       initDisplay(this.$root)
     }
 

@@ -1,7 +1,7 @@
 import {EditorComponent} from '@/core/EditorComponent'
 import {createToolbar} from './toolbar.template'
 import {clickFunctional} from './toolbar.functional'
-import {convertName} from '@core/utils'
+import {convertName, convertSize} from '@core/utils'
 import {$} from '@core/dom'
 
 export class RightToolbar extends EditorComponent {
@@ -10,7 +10,7 @@ export class RightToolbar extends EditorComponent {
     constructor($root, options) {
       super($root, options = {
         name: 'RightPanel',
-        listeners: ['click', 'change', 'mousedown', 'input'],
+        listeners: ['click', 'change', 'mousedown', 'keydown'],
         ...options
       })
 
@@ -23,14 +23,19 @@ export class RightToolbar extends EditorComponent {
       this.canvas = document.querySelectorAll('[data-canvas="img"]')[0]
       this.inputRange = this.$root.find('[data-range="input"]')
       this.$tools = this.$root.find('[data-type="tools"]')
-      // this.$on('reader:upload', file => { // add emit where image resize type
-      //   this.$root.find('[data-type="size"]').html(file.size)
-      // })
-      this.$on('reader:upload', () => {
+      this.$size = this.$root.find('[data-type="size"]')
+      this.ctx = this.canvas.getContext('2d')
+
+      this.$on('reader:upload', file => {
+        const size = convertSize(file.size)
+        this.$size.html(size)
+      })
+      this.$on('image:upload', img => {
         this.$tools.find('[data-tool="width"]')
-            .value = this.canvas.clientWidth
+            .value = img.width
         this.$tools.find('[data-tool="height"]')
-            .value = this.canvas.clientHeight
+            .value = img.height
+        $(this.canvas).css({width: img.width + 'px', height: img.height + 'px'})
       })
     }
 
@@ -66,9 +71,6 @@ export class RightToolbar extends EditorComponent {
 
         this.$emit('toolbar:convert', this.format)
       }
-      if ($target.data.tool == 'width') {
-        console.log($target)
-      }
     }
 
     onMousedown(event) {
@@ -85,10 +87,10 @@ export class RightToolbar extends EditorComponent {
       }
     }
 
-    onInput(event) {
+    onKeydown(event) {
       const $target = $(event.target)
       if ($target.data.tool == 'width') { // resize width
-        $(this.canvas).css({width: $target.value})
+        this.ctx.canvas.width = $target.value
       }
       if ($target.data.tool == 'height') { // resize height
         console.log($target)
