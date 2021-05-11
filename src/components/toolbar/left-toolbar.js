@@ -1,6 +1,6 @@
 import {EditorComponent} from '@/core/EditorComponent'
 import {createToolbar} from './toolbar.template'
-import {clickFunctional} from './toolbar.functional'
+import {toolShow} from './toolbar.functional'
 import {convertName} from '@core/utils'
 import {$} from '@core/dom'
 
@@ -36,7 +36,7 @@ export class LeftToolbar extends EditorComponent {
 
     onClick(event) {
       const $target = $(event.target)
-      clickFunctional($target)
+      toolShow($target)
     }
 
     onChange(event) {

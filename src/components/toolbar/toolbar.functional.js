@@ -1,6 +1,6 @@
 import {$} from '@core/dom'
 
-export function clickFunctional($target) {
+export function toolShow($target) {
   if ($target.data.type == 'deploy') {
     const $toolsBlock =
         $($target.$el.parentNode.parentNode.childNodes[3])

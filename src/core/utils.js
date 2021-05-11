@@ -13,6 +13,7 @@ export function equalsScale(scale) {
 }
 
 export function canvasDraw(canvas, ctx, img) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
   canvas.width = img.width != 0 ? img.width : canvas.width
   canvas.height = img.height !=0 ? img.height : canvas.height
 
@@ -27,4 +28,9 @@ export function convertName(format) {
 
 export function convertSize(size) {
   return `${(size/1000).toFixed(1)} kB`
+}
+
+export function giveSize(width, height) {
+  const ratio = width > height ? width / height : height / width
+  return width > height ? height + ratio : width + ratio
 }

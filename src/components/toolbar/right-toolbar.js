@@ -1,8 +1,9 @@
 import {EditorComponent} from '@/core/EditorComponent'
 import {createToolbar} from './toolbar.template'
-import {clickFunctional} from './toolbar.functional'
+import {toolShow} from './toolbar.functional'
 import {convertName, convertSize} from '@core/utils'
 import {$} from '@core/dom'
+import {canvasDraw} from '../../core/utils'
 
 export class RightToolbar extends EditorComponent {
     static className = 'right_panel'
@@ -15,6 +16,7 @@ export class RightToolbar extends EditorComponent {
       })
 
       this.format = 'image/orig'
+      this.image = ''
     }
 
     init() {
@@ -35,13 +37,14 @@ export class RightToolbar extends EditorComponent {
             .value = img.width
         this.$tools.find('[data-tool="height"]')
             .value = img.height
+        this.image = img
         $(this.canvas).css({width: img.width + 'px', height: img.height + 'px'})
       })
     }
 
     toHTML() {
       const rightDownload = `
-            <span class="size__size" data-type="size">0</span>
+            <span class="size__size right_tool" data-type="size">0</span>
             <div class="size__image">
                 <button class="download-img bg-blue">
                     <i class="material-icons">system_update_alt</i>
@@ -54,7 +57,7 @@ export class RightToolbar extends EditorComponent {
 
     onClick(event) {
       const $target = $(event.target)
-      clickFunctional($target)
+      toolShow($target)
     }
 
     onChange(event) {
@@ -90,6 +93,7 @@ export class RightToolbar extends EditorComponent {
     onKeydown(event) {
       const $target = $(event.target)
       if ($target.data.tool == 'width') { // resize width
+        // canvasDraw(this.canvas, this.ctx, this.image)
         this.ctx.canvas.width = $target.value
       }
       if ($target.data.tool == 'height') { // resize height

@@ -1,4 +1,4 @@
-export function createToolbar(download, width, height) {
+export function createToolbar(download) {
   return `
         <div class="edit_section">
             <div class="title bg-dark">

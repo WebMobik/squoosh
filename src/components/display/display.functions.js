@@ -48,18 +48,14 @@ export default class ResizeImage {
 
   static convertCanvasToImage(canvas, format, size = 0.75) {
     const ctx = canvas.getContext('2d')
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
     canvasDraw(canvas, ctx, this.image)
 
     const src = format == 'image/png' ? canvas.toDataURL(format) :
       canvas.toDataURL(format, +size)
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-
     const img = new Image()
     img.src = src
-
     img.onload = () => canvasDraw(canvas, ctx, img)
+    console.log(canvas.__proto__)
   }
 }
